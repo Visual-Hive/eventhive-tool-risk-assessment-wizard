@@ -1,0 +1,183 @@
+{
+    "slug": "risk-assessment-wizard",
+    "name": "Risk Assessment Wizard",
+    "version": "1.0.0",
+    "description": "AI-powered step-by-step wizard that turns your venue's generic risk assessment PDF into a complete event-specific risk register. Upload the venue PDF, import your supplier and activity data, and walk through each risk area with AI-suggested controls and scores.",
+    "category": "operations",
+    "difficulty": "advanced",
+    "requires_backend": true,
+    "data_space": "event-risk",
+    "is_published": true,
+    "author": "Visual Hive",
+    "source_repo": "https://github.com/Visual-Hive/eventhive-tool-risk-assessment-wizard",
+    "tool_file": "tool.html",
+    "thumbnail": "thumbnail.png",
+    "config_schema": {
+        "sections": [
+            {
+                "id": "branding",
+                "title": "Branding",
+                "description": "Customise to match your company or event brand.",
+                "fields": [
+                    {
+                        "id": "companyName",
+                        "type": "text",
+                        "label": "Company / Organisation Name",
+                        "placeholder": "e.g. Momentum Events",
+                        "required": true,
+                        "default": "My Event Company"
+                    },
+                    {
+                        "id": "primaryColor",
+                        "type": "color",
+                        "label": "Primary Brand Colour",
+                        "default": "#2563eb"
+                    },
+                    {
+                        "id": "logoUrl",
+                        "type": "url",
+                        "label": "Logo URL",
+                        "description": "Optional. Displayed in the header.",
+                        "required": false
+                    }
+                ]
+            },
+            {
+                "id": "event_details",
+                "title": "Event Details",
+                "description": "Default event details. These can be overridden by importing from Ops Tracker or Countdown Planner.",
+                "fields": [
+                    {
+                        "id": "eventName",
+                        "type": "text",
+                        "label": "Event Name",
+                        "placeholder": "e.g. AI Tech Summit 2026",
+                        "required": true,
+                        "default": "Conference 2026"
+                    },
+                    {
+                        "id": "eventDate",
+                        "type": "text",
+                        "label": "Event Date",
+                        "placeholder": "YYYY-MM-DD",
+                        "description": "Format: YYYY-MM-DD",
+                        "required": true,
+                        "default": "2026-09-15"
+                    },
+                    {
+                        "id": "venueName",
+                        "type": "text",
+                        "label": "Venue Name",
+                        "placeholder": "e.g. Harrogate Convention Centre",
+                        "default": "Convention Centre"
+                    }
+                ]
+            },
+            {
+                "id": "ai_config",
+                "title": "AI Configuration",
+                "description": "Connect your Anthropic API key to enable AI-powered PDF analysis and intelligent gap detection. Without this, the wizard works in manual mode using pre-built hazard category templates.",
+                "fields": [
+                    {
+                        "id": "anthropicApiKey",
+                        "type": "password",
+                        "label": "Anthropic API Key",
+                        "placeholder": "sk-ant-...",
+                        "description": "Required for AI-powered PDF analysis and gap detection. Your key is sent directly to Anthropic and is never stored in the database.",
+                        "required": false
+                    }
+                ]
+            },
+            {
+                "id": "risk_methodology",
+                "title": "Risk Methodology Defaults",
+                "description": "Default scoring methodology. This will be overridden when a venue PDF is uploaded and analysed.",
+                "fields": [
+                    {
+                        "id": "defaultMethodology",
+                        "type": "select",
+                        "label": "Default Scoring Methodology",
+                        "options": [
+                            {
+                                "label": "5×5 with Control Weighting (P × S × W) — Recommended",
+                                "value": "PxSxW"
+                            },
+                            {
+                                "label": "5×5 Simple (P × S)",
+                                "value": "PxS_5x5"
+                            },
+                            {
+                                "label": "3×3 Simple (P × S)",
+                                "value": "PxS_3x3"
+                            }
+                        ],
+                        "default": "PxSxW"
+                    }
+                ]
+            },
+            {
+                "id": "hazard_categories",
+                "title": "Hazard Categories",
+                "description": "Default venue hazard categories for manual mode (no PDF upload).",
+                "fields": [
+                    {
+                        "id": "defaultCategories",
+                        "type": "json",
+                        "label": "Standard Venue Categories",
+                        "description": "The 18 standard venue hazard categories. Modify only if your venue uses a different set.",
+                        "default": [
+                            "Terrorism & National Emergencies",
+                            "Security, Violence & Aggression",
+                            "Crowd Control",
+                            "Safe Evacuation",
+                            "Fire",
+                            "Power Failure",
+                            "Floor Layout",
+                            "Complex Structures",
+                            "Stage Sets & Raised Platforms",
+                            "Electrical: Installation, Testing & Commissioning",
+                            "Electrical: Use & Adaptation",
+                            "Electrical: Decommissioning & Removal",
+                            "Gas Safety",
+                            "Rigging",
+                            "Heights / Working at Height / Access",
+                            "Mechanical Lifting Equipment (inc. FLTs)",
+                            "Slips, Trips, Falls",
+                            "Transport & Vehicle Movement"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "default_config": {
+        "companyName": "My Event Company",
+        "primaryColor": "#2563eb",
+        "logoUrl": "",
+        "eventName": "Conference 2026",
+        "eventDate": "2026-09-15",
+        "venueName": "Convention Centre",
+        "anthropicApiKey": "",
+        "defaultMethodology": "PxSxW",
+        "defaultCategories": [
+            "Terrorism & National Emergencies",
+            "Security, Violence & Aggression",
+            "Crowd Control",
+            "Safe Evacuation",
+            "Fire",
+            "Power Failure",
+            "Floor Layout",
+            "Complex Structures",
+            "Stage Sets & Raised Platforms",
+            "Electrical: Installation, Testing & Commissioning",
+            "Electrical: Use & Adaptation",
+            "Electrical: Decommissioning & Removal",
+            "Gas Safety",
+            "Rigging",
+            "Heights / Working at Height / Access",
+            "Mechanical Lifting Equipment (inc. FLTs)",
+            "Slips, Trips, Falls",
+            "Transport & Vehicle Movement"
+        ]
+    }
+}
